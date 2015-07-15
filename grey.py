@@ -3,15 +3,14 @@ import numpy as np
 import sys
 
 img = cv2.imread(sys.argv[1])
-img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
 
 width = img.shape[0]
 height = img.shape[1]
 
-chars = [" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"]
+# 'brightness' ASCII characters
+# From darkest to brightest.
+chars = ["@", "%", "#", "*", "+", "=", "-", ":", ".", " "]
 ascii = []
-
-output = open("ascii.txt", "w+")
 
 # Function to take in a pixel's color values
 def turnIntoGrey(red, green, blue):
@@ -21,7 +20,8 @@ def turnIntoGrey(red, green, blue):
 # For every pixel in the image:
 for i in range(width):
     for j in range(height):
-        red = img[i, j, 2], green = img[i, j, 1]
+        red = img[i, j, 2]
+        green = img[i, j, 1]
         blue = img[i, j, 0]
         grey = turnIntoGrey(red, green, blue)
         img.itemset((i, j, 2), grey)
@@ -30,8 +30,11 @@ for i in range(width):
         ascii.append(chars[int(round(grey, 0)) / 28])
     ascii.append("\n")
 
-output.write("".join(ascii))
+output = open("ascii.txt", "w+")
 
-cv2.imshow("img", img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# Go through each element in ascii list:
+for i in range(len(ascii)):
+    # Write it to ascii.txt:
+    output.write(ascii[i])
+
+output.close()
