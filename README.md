@@ -3,6 +3,7 @@ Take in images, output ASCII art.
 A Python script to convert images to greyscale and output that greyscale image as ASCII art using the standard "10 character luminosity" character set.
 
 ## Example usage:
+![demo](https://i.imgur.com/XnNnLEV.png)
 grey.py picture.jpg
 The output for this file is written to ascii.txt
 
